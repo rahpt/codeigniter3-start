@@ -6,7 +6,7 @@
  * @author     José Proença <https://github.com/RahPT>
  * @license    MIT License
  * @copyright  2019 José Proença
- * @link       https://github.com/rahpt/codeigniter-start
+ * @link       https://github.com/rahpt/codeigniter3-start
  */
 
 namespace RahPT\CodeIgniter;
@@ -128,3 +128,4 @@ class Installer {
     }
 
 }
+
