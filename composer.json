@@ -1,0 +1,30 @@
+{
+    "name": "rahpt/ci-start",
+    "description": "RahPT - Codeigniter Start Project",
+    "keywords": [
+        "CodeIgniter",
+        "Composer",
+        "installer"
+    ],
+    "homepage": "https://github.com/rahpt/ci-start",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jose Proenca",
+            "email": "github.rahpt@rah.pt"
+        }
+    ],
+    "require": {
+        "codeigniter/framework": "3.1.*"
+    },
+    "scripts" : {
+        "post-create-project-cmd": [
+            "RahPT\\CodeIgniter\\Installer::postInstall"
+        ]
+    },    
+    "autoload": {
+        "psr-4": {
+            "RahPT\\CodeIgniter\\": "src/"
+        }
+    }
+}
