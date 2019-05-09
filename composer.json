@@ -1,5 +1,5 @@
 {
-    "name": "rahpt/codeigniter3-start-2",
+    "name": "rahpt/codeigniter3-start",
     "description": "RahPT - Codeigniter 3 Start Project",
     "keywords": [
         "CodeIgniter",
@@ -28,5 +28,6 @@
         }
     }
 }
+
 
 
