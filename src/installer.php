@@ -22,54 +22,60 @@ class Installer {
      *
      * @param Event $event
      */
-    public static function postInstall(Event $event = null) 
-    {
+    public static function postInstall(Event $event = null) {
         // Copy CodeIgniter files
         self::recursiveCopy('vendor/codeigniter/framework/application', 'application');
         mkdir(static::DOCROOT, 0755);
         copy('vendor/codeigniter/framework/index.php', static::DOCROOT . '/index.php');
-        copy('dot.htaccess', static::DOCROOT . '/.htaccess');
+        copy('src/dot.htaccess', static::DOCROOT . '/.htaccess');
         copy('vendor/codeigniter/framework/.gitignore', '.gitignore');
 
         // Fix paths in index.php
         $file = static::DOCROOT . '/index.php';
-        $contents = file_get_contents($file);
-        $contents = str_replace(
-                '$system_path = \'system\';',
-                '$system_path = \'../vendor/codeigniter/framework/system\';',
-                $contents
+        self::updateParams($file,
+                [
+                    [
+                        'from' => '$system_path = \'system\';',
+                        'to' => '$system_path = \'../vendor/codeigniter/framework/system\';'
+                    ],
+                    [
+                        'from' => '$application_folder = \'application\';',
+                        'to' => '$application_folder = \'../application\';'
+                    ]
+                ]
         );
-        $contents = str_replace(
-                '$application_folder = \'application\';',
-                '$application_folder = \'../application\';',
-                $contents
-        );
-        file_put_contents($file, $contents);
 
         // Enable Composer Autoloader
         $file = 'application/config/config.php';
-        $contents = file_get_contents($file);
-        $contents = str_replace(
-                '$config[\'composer_autoload\'] = FALSE;',
-                '$config[\'composer_autoload\'] = realpath(APPPATH . \'../vendor/autoload.php\');',
-                $contents
+        self::updateParams($file,
+                [
+                    [
+                        'from' => '$config[\'composer_autoload\'] = FALSE;',
+                        'to' => '$config[\'composer_autoload\'] = realpath(APPPATH . \'../vendor/autoload.php\');'
+                    ]
+                ],
+                // Set 'index_page' blank
+                [
+                    'from' => '$config[\'index_page\'] = \'index.php\';',
+                    'to' => '$config[\'index_page\'] = \'\';'
+                ]
         );
-
-        // Set 'index_page' blank
-        $contents = str_replace(
-                '$config[\'index_page\'] = \'index.php\';',
-                '$config[\'index_page\'] = \'\';',
-                $contents
-        );
-        file_put_contents($file, $contents);
         // Update composer.json
-        copy('composer.json.dist', 'composer.json');
+        copy('src/composer.json.dist', 'composer.json');
         // Run composer update
         self::composerUpdate();
         // Show message
         self::showMessage($event);
         // Delete unneeded files
         self::deleteSelf();
+    }
+
+    private static function updateParams($fileName, $arrParams) {
+        $contents = file_get_contents($fileName);
+        foreach ($arrParams as $param) {
+            $contents = str_replace($param['from'], $param['to'], $contents);
+        }
+        file_put_contents($fileName, $contents);
     }
 
     private static function composerUpdate() {
@@ -81,8 +87,7 @@ class Installer {
      *
      * @param Event $event
      */
-    private static function showMessage(Event $event = null) 
-    {
+    private static function showMessage(Event $event = null) {
         $io = $event->getIO();
         $io->write('==================================================');
         $io->write('<info>`public/.htaccess` was installed. If you don\'t need it, please remove it.</info>');
@@ -94,8 +99,7 @@ class Installer {
         $io->write('==================================================');
     }
 
-    private static function deleteSelf() 
-    {
+    private static function deleteSelf() {
         unlink(__FILE__);
         rmdir('src');
         unlink('composer.json.dist');
@@ -109,8 +113,7 @@ class Installer {
      * @param string $src
      * @param string $dst
      */
-    private static function recursiveCopy($src, $dst) 
-    {
+    private static function recursiveCopy($src, $dst) {
         mkdir($dst, 0755);
 
         $iterator = new \RecursiveIteratorIterator(
