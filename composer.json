@@ -17,7 +17,7 @@
     "require": {
         "codeigniter/framework": "3.1.*"
     },
-    "scripts" : {
+    "scripts": {
         "post-create-project-cmd": [
             "RahPT\\CodeIgniter\\Installer::postInstall"
         ]
@@ -28,4 +28,5 @@
         }
     }
 }
+
 
