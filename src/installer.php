@@ -95,7 +95,7 @@ class Installer {
         $io->write('$ cd <codeigniter_project_folder>');
         $io->write('$ php bin/install.php');
         $io->write('<info>The above command will show help message.</info>');
-        $io->write('See <https://github.com/rahpt/codeigniter-start> for details');
+        $io->write('See <https://github.com/rahpt/codeigniter3-start> for details');
         $io->write('==================================================');
     }
 
@@ -130,5 +130,6 @@ class Installer {
     }
 
 }
+
 
 
