@@ -31,7 +31,7 @@ You can update CodeIgniter system folder to latest version with one command.
 ### Install CodeIgniter
 
 ```
-$ composer create-project rahpt/codeigniter3-start:dev-master <projec_name>
+$ composer create-project rahpt/codeigniter3-start:dev-master <project_name>
 ```
 
 #### Install Translations for System Messages
@@ -66,6 +66,7 @@ $ composer update
 * [CodeIgniter3 Filename Checker](https://github.com/kenjis/codeigniter3-filename-checker)
 * [CodeIgniter Widget (View Partial) Sample](https://github.com/kenjis/codeigniter-widgets)
 * https://github.com/yidas/codeigniter-pack#extensions
+
 
 
 

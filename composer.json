@@ -15,7 +15,8 @@
         }
     ],
     "require": {
-        "codeigniter/framework": "3.1.*"
+        "codeigniter/framework": "3.1.*",
+        "twbs/bootstrap": "4.3.1"
     },
     "scripts": {
         "post-create-project-cmd": [
@@ -28,6 +29,3 @@
         }
     }
 }
-
-
-
